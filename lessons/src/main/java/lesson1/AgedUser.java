@@ -1,3 +1,5 @@
+package lesson1;
+
 import java.util.Objects;
 
 public final class AgedUser extends User implements Workable, Eatable {
@@ -39,7 +41,7 @@ public final class AgedUser extends User implements Workable, Eatable {
 
     @Override
     public String toString() {
-        return "AgedUser{" +
+        return "lesson1.AgedUser{" +
                 "age=" + age +
                 ", name='" + name + '\'' +
                 '}';
@@ -52,6 +54,6 @@ public final class AgedUser extends User implements Workable, Eatable {
 
     @Override
     public void eat() {
-        System.out.println("AgedUser eats a lot");
+        System.out.println("lesson1.AgedUser eats a lot");
     }
 }

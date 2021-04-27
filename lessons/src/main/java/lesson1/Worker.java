@@ -1,3 +1,5 @@
+package lesson1;
+
 public class Worker {
 
     private final AgedUser agedUser;

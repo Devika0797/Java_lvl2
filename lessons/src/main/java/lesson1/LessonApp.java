@@ -1,3 +1,7 @@
+package lesson1;
+
+import lesson1.Workable;
+
 public class LessonApp {
     public static void main(String[] args) {
 

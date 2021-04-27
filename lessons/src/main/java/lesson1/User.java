@@ -1,3 +1,5 @@
+package lesson1;
+
 public class User {
 
     private static int count = 0;
