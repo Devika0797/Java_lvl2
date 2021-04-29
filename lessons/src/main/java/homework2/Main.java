@@ -29,7 +29,7 @@ public class Main {
 
         } catch (MyArrayDataException e) {
             System.out.println("Неверное значение элемента массива!");
-            System.out.println("Ощибка в ячейке: " + e.i + "." + e.j);
+            System.out.println("Ошибка в ячейке: " + e.i + "." + e.j);
         }
     }
 
