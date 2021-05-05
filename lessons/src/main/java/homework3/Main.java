@@ -16,8 +16,6 @@ public class Main {
 // номер телефона по фамилии. Следует учесть, что под одной фамилией может быть несколько телефонов
 // (в случае однофамильцев), тогда при запросе такой фамилии должны выводиться все телефоны.
 
-
-
     public static void main(String[] args) {
 
         System.out.println("Задание 1.");
@@ -41,7 +39,7 @@ public class Main {
         phoneBook.add("Ivanov", "9874567");
 
         System.out.println("Иванов" + phoneBook.get("Ivanov"));
-        System.out.println("Сидоров" +phoneBook.get( "Sidorov"));
+        System.out.println("Сидоров" +phoneBook.get("Sidorov"));
         System.out.println("Петров" + phoneBook.get("Petrov"));
 
 
