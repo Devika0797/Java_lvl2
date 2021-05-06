@@ -20,6 +20,7 @@ public class App extends JFrame {
         add(button);
 
         StringBuilder sb = new StringBuilder();
+
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
