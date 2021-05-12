@@ -1,11 +1,6 @@
 package homework3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
 // 1. Создать массив с набором слов (10-20 слов, должны встречаться повторяющиеся).
@@ -28,7 +23,12 @@ public class Main {
 
         Set<String> uniqueWords = new HashSet<>(wordsArray);
         System.out.println("Уникальные слова: " + uniqueWords);
-        // сколько раз встречается слово
+
+        Map<String, Integer> freqWords = new HashMap<>();
+        for (String s : wordsArray) {
+            int val = freqWords.getOrDefault(s, 0) + 1;
+            freqWords.put(s, val);
+        } System.out.println("Каждое слово встречается: " + freqWords);
 
 
         System.out.println("Задание 2.");
