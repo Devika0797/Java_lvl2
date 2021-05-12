@@ -20,14 +20,11 @@ public class Main {
         };
 
         try{ // обработка исключений + результат
-            try{
-                int result = method(arr);
-                System.out.println("Сумма элементов массива:" + result );
+            int result = method(arr);
+            System.out.println("Сумма элементов массива:" + result );
             } catch (MyArraySizeException e ){
                 System.out.println("Превышен размер массива");
-            }
-
-        } catch (MyArrayDataException e) {
+            } catch (MyArrayDataException e) {
             System.out.println("Неверное значение элемента массива!");
             System.out.println("Ошибка в ячейке: " + e.i + "." + e.j);
         }
