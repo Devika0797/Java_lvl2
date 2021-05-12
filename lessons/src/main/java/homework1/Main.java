@@ -20,34 +20,23 @@ public class Main {
                 new Robot("Робот", 100, 10)
         };
 
-        Obstacable[] obstacles = { // массив из препятствий, макс величина
+        Obstacle[] obstacles = { // массив из препятствий, макс величина
                 new Treadmill("Беговая дорожка", 70),
                 new Wall("Стена", 2)
         };
 
-        System.out.println("Прохождение препятствий!");
+        System.out.println("Прохождение препятствий!\nКаждый участник должен преодолеть стену и беговую дорожку.");
 
         for (RunableJumpable member : members) {
-            System.out.println(member + " должен преодолеть стену и беговую дорожку.");
-            boolean winner = true;
-            for (Obstacable obstacle : obstacles) {
-                if (obstacle.getRun(member.getMaxLength()) ||
-                        obstacle.getJump(member.getMaxHeight())) {
-                    System.out.println(member + " пробует пройти " + obstacle + ".\n"+ member + " смог преодолеть препятствие!");
+            System.out.println("Участник: " + member);
+            for (Obstacle obstacle : obstacles) {
+                if (member.pass(obstacle)) {
+                    System.out.println(obstacle + " - препятствие пройдено.");
                 } else {
-                    winner = false;
-                    System.out.println(member + " пробует пройти " + obstacle + ".\n"+ member + " не смог преодолеть препятствие!");
+                    System.out.println(obstacle + " - препятствие не пройдено. " + member + " сходит с дистанции.");
                     break;
                 }
             }
-
-            if(winner) {
-                System.out.println(member + " успешно прошёл дистанцию!");
-            } else {
-                System.out.println(member + " проиграл.");
-            }
-            System.out.println();
-
 
 
         }

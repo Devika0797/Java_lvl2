@@ -1,6 +1,6 @@
 package homework1;
 
-public class Wall implements Obstacable {
+public class Wall extends Obstacle{
 
     private String item;
     int height;
@@ -10,18 +10,15 @@ public class Wall implements Obstacable {
         this.height = height;//  макс высота стены
     }
 
+    public int getHeight() {
+        return height;
+    }
+
     @Override
     public String toString() {
         return item;
     }
 
-    @Override
-    public boolean getRun(int maxLength){
-        return false;
-    }
 
-    @Override
-    public boolean getJump(int maxHeight){
-        return maxHeight >= height; // высота прыжка >= макс высоты стены
-    }
+
 }

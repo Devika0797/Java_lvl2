@@ -18,23 +18,18 @@ public class Robot implements RunableJumpable {
     }
 
     @Override
-    public void run() {
-        System.out.println("Robot run");
+    public boolean run(Obstacle obstacle) {
+        //System.out.println("Robot run");
+        return maxLength >= ((Treadmill) obstacle).getLength();
+
     }
 
     @Override
-    public int getMaxLength() {
-        return maxLength;
+    public boolean jump(Obstacle obstacle) {
+        //System.out.println("Robot jump");
+        return maxHeight >= ((Wall) obstacle).getHeight();
+
     }
 
-    @Override
-    public void jump() {
-        System.out.println("Robot jump");
-    }
-
-    @Override
-    public int getMaxHeight() {
-        return maxHeight;
-    }
 
 }

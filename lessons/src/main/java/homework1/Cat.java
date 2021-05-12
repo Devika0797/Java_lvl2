@@ -17,23 +17,17 @@ public class Cat implements RunableJumpable {
     }
 
     @Override
-    public void run() {
-        System.out.println("Cat run");
+    public boolean run(Obstacle obstacle) {
+       // System.out.println("Cat run");
+        return maxLength >= ((Treadmill) obstacle).getLength();
+
     }
 
     @Override
-    public int getMaxLength() {
-        return maxLength;
-    }
+    public boolean jump(Obstacle obstacle) {
+        //System.out.println("Cat jump");
+        return maxHeight >= ((Wall) obstacle).getHeight();
 
-    @Override
-    public void jump() {
-        System.out.println("Cat jump");
-    }
-
-    @Override
-    public int getMaxHeight() {
-        return maxHeight;
     }
 
 }

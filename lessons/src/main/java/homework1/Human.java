@@ -18,24 +18,19 @@ public class Human implements RunableJumpable {
         }
 
         @Override
-        public void run() {
-            System.out.println("Human run");
+        public boolean run(Obstacle obstacle) {
+            //System.out.println("Human run");
+            return maxLength >= ((Treadmill) obstacle).getLength();
         }
 
         @Override
-        public int getMaxLength() {
-            return maxLength;
+        public boolean jump(Obstacle obstacle) {
+            //System.out.println("Human jump");
+            return maxHeight >= ((Wall) obstacle).getHeight();
+
         }
 
-        @Override
-        public void jump() {
-            System.out.println("Human jump");
-        }
 
-        @Override
-        public int getMaxHeight() {
-            return maxHeight;
-        }
 
 
 

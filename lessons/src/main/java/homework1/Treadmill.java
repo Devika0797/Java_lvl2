@@ -1,6 +1,6 @@
 package homework1;
 
-public class Treadmill implements Obstacable {
+public class Treadmill extends Obstacle {
 
     private String item;
     int length;
@@ -11,18 +11,13 @@ public class Treadmill implements Obstacable {
         this.length = length; // макс длина дорожки
     }
 
+    public int getLength() {
+        return length;
+    }
     @Override
     public String toString() {
         return item;
     }
 
-    @Override
-    public boolean getRun(int maxLength){
-        return maxLength >= length; // длина бега >= макс длины дорожки
-    }
 
-    @Override
-    public boolean getJump(int maxHeight){
-        return false;
-    }
 }
