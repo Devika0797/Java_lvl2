@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+
 /**
  * обслуживает клиента,  отвечает за связь между клиентом и сервером
  */
@@ -22,11 +23,12 @@ public class ClientHandler {
 
     public ClientHandler(MyServer server, Socket socket) {
         try {
-            this.server = server;
             this.socket = socket;
+            this.server = server;
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());
             this.name = "";
+
             new Thread(() -> {
                 try {
                     authentification();//авторизация как в чатике
@@ -44,8 +46,6 @@ public class ClientHandler {
         } catch (IOException e) {
             System.out.println("Проблема при создании клинета.");
         }
-
-
     }
 
     private void authentification() throws IOException {
@@ -65,19 +65,17 @@ public class ClientHandler {
                     } else {
                         sendMsg("Логин уже испульзуется");
                     }
-
                 } else {
                     sendMsg("Неверные логин/пароль");
-
-                 }
+                }
             }
         }
     }
 
-    public void sendMsg(String message) throws IOException {
+    public void sendMsg(String message) {
         try {
             outputStream.writeUTF(message);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -89,13 +87,19 @@ public class ClientHandler {
             if (messageFromClient.equals(ChatConstants.STOP_WORD)) {
                 return;
             }
-            server.broadcastMessage(name + ": " + messageFromClient); // распространить сообщение всем клиентам
-
+            if (messageFromClient.startsWith(ChatConstants.PRIVATE_MESSAGE)) {
+                String nickname = messageFromClient.substring(messageFromClient.indexOf(" ") + 1);
+                String message = nickname.substring(nickname.indexOf(" ") + 1);
+                nickname = nickname.substring(0, nickname.indexOf(" "));
+                server.sendPrivateMessage(this, nickname, nickname + ": " + message);
+            } else{
+                server.broadcastMessage(name + ": " + messageFromClient);// всем клиентам
+            }
         }
     }
 
     public void closeConnection() throws IOException {
-        server.subscribe(this);
+        server.unsubscribe(this);
         server.broadcastMessage(name + " вышел из чата");
         try {
             inputStream.close();

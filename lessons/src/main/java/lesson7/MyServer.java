@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * само приложение
  */
@@ -23,9 +24,7 @@ public class MyServer {
                 Socket socket = server.accept();
                 System.out.println("Клиент подключился");
                 new ClientHandler(this, socket);
-
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -39,26 +38,39 @@ public class MyServer {
         return authService;
     }
 
-    public boolean isNickBusy(String nick) {
-       for (ClientHandler client : clients){
-           if (client.getName().equals(nick)){
-               return true;
-           }
-       }
-       return false;
+    public synchronized boolean isNickBusy(String nick) {
+        for (ClientHandler client : clients) {
+            if (client.getName().equals(nick)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void subscribe(ClientHandler clientHandler) {
+    public synchronized void subscribe(ClientHandler clientHandler) {
         clients.add(clientHandler);
     }
-    public void unsubscribe(ClientHandler clientHandler) {
+    public synchronized void unsubscribe(ClientHandler clientHandler) {
         clients.remove(clientHandler);
     }
 
     // отправляет сообщения всем пользователям
     public void broadcastMessage(String message) throws IOException {
+        clients.forEach(client -> client.sendMsg(message));
+    }
+
+    public synchronized void sendPrivateMessage(ClientHandler clientHandler, String nickname, String message) {
         for (ClientHandler client : clients) {
+            if (!nickname.contains(client.getName())) {
+                continue;
+            }
             client.sendMsg(message);
+//            if (client.getName().equals(nick)) {
+//                client.sendMsg(message);
+//                return;
+//            }
         }
     }
+
 }
+
