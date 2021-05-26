@@ -10,12 +10,14 @@ import java.net.Socket;
  * обслуживает клиента,  отвечает за связь между клиентом и сервером
  */
 public class ClientHandler {
+
     private MyServer server;
     private Socket socket;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
-
     private String name;
+    private  boolean authorized;
+    private  long startTime;
 
     public String getName() {
         return name;
@@ -28,6 +30,11 @@ public class ClientHandler {
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());
             this.name = "";
+            this.authorized = false;
+
+            new Thread(() -> {
+                AuthTimeOut();
+            }).start();
 
             new Thread(() -> {
                 try {
@@ -57,6 +64,7 @@ public class ClientHandler {
                 String nick = server.getAuthService().getNickByLoginAndPass(parts[1], parts[2]);
                 if (nick != null) {
                     if (!server.isNickBusy(nick)){ //проверим, что такого нет
+                        authorized = true;
                         sendMsg(ChatConstants.AUTH_OK + " " + nick);
                         name = nick;
                         server.subscribe(this);
@@ -94,6 +102,22 @@ public class ClientHandler {
                 server.sendPrivateMessage(this, nickname, nickname + ": " + message);
             } else{
                 server.broadcastMessage(name + ": " + messageFromClient);// всем клиентам
+            }
+        }
+    }
+
+    public  void  AuthTimeOut() {
+        while (true) {
+            if (this.authorized) {
+                break;
+            }else if ((System.currentTimeMillis() - this.startTime) / 1000 > ChatConstants.TIMEOUT){
+                sendMsg("Время ожидания вышло, соедиение откл");
+                sendMsg(ChatConstants.CLOSECONNECTION);
+            }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

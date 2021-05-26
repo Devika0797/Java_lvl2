@@ -69,6 +69,18 @@ public class EchoClient extends JFrame {
         }).start();
     }
 
+    private void shutDown() {
+        chatArea.append("Соединения завершается");
+        try {
+            Thread.sleep(ChatConstants.SLEEP);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        closeConnection();
+        setVisible(false);
+    }
+
+
     public void closeConnection() {
         try {
             inputStream.close();
