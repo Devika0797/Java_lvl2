@@ -61,7 +61,7 @@ public class MyServer {
 
     public synchronized void sendPrivateMessage(ClientHandler clientHandler, String nickname, String message) {
         for (ClientHandler client : clients) {
-            if (!nickname.contains(client.getName())) {
+            if (!nickname.equals(client.getName())) {
                 continue;
             }
             client.sendMsg(message);
