@@ -1,14 +1,13 @@
 package lesson7;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * простейшая реализация сервиса аутентификации которая работает на встроенном списке
  */
-public class BaseAuthService implements  AuthService{
+public class BaseAuthService implements  AuthService {
 
-    private  class Entry{
+    private class Entry {
         private final String nick;
         private final String login;
         private final String pass;
@@ -32,6 +31,7 @@ public class BaseAuthService implements  AuthService{
 //        entries.add(new Entry("nick2", "login2", "pass2");
 //        entries.add(
     }
+
     @Override
     public void start() {
         System.out.println(this.getClass().getName() + " server started");
@@ -45,12 +45,11 @@ public class BaseAuthService implements  AuthService{
     }
 
     @Override
-    public String getNickByLoginAndPass(String login, String pass) {
-      for (Entry entry : entries) {
+    public String getNickByLoginAndPass (String login, String pass) {
+        for (Entry entry : entries) {
             if (entry.login.equals(login) && entry.pass.equals(pass)) {
                 return entry.nick;
             }
-        }
-        return null;
+        } return null;
     }
 }

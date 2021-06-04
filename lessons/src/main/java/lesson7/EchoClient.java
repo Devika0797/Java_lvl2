@@ -1,4 +1,4 @@
-package lesson6;
+package lesson7;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -17,14 +17,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import lesson7.ChatConstants;
+import lesson6.EchoConstants;
 
 public class EchoClient extends JFrame {
 
     private Socket socket;
 
     private JTextArea chatArea;
-
     private JTextField inputField;
 
     private DataInputStream inputStream;
@@ -40,9 +39,9 @@ public class EchoClient extends JFrame {
     }
 
     private void openConnection() throws IOException {
-        socket = new Socket(EchoConstants.HOST, EchoConstants.PORT);
-        inputStream = new DataInputStream(socket.getInputStream());
-        outputStream = new DataOutputStream(socket.getOutputStream());
+        this.socket = new Socket(EchoConstants.HOST, EchoConstants.PORT);
+        this.inputStream = new DataInputStream(socket.getInputStream());
+        this.outputStream = new DataOutputStream(socket.getOutputStream());
 
         new Thread(() -> {
             try {
@@ -60,13 +59,10 @@ public class EchoClient extends JFrame {
                     String strFromServer = inputStream.readUTF();
                     if (strFromServer.equals(EchoConstants.STOP_WORD)) {
                         break;
-                    } else if (strFromServer.startsWith(ChatConstants.CLIENTS_LIST)) {
-                        chatArea.append("Сейчас онлайн "+ strFromServer);
-                    } else {
-                        chatArea.append(strFromServer);
                     }
+                    chatArea.append(strFromServer);
                     chatArea.append("\n");
-                }
+                    }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -102,10 +98,9 @@ public class EchoClient extends JFrame {
         chatArea.setLineWrap(true);
         add(new JScrollPane(chatArea), BorderLayout.CENTER);
 
-        //down pannel
+        //down panel
         JPanel panel = new JPanel(new BorderLayout());
         inputField = new JTextField();
-        // inputField.setBounds(100, 100, 150, 30);
         panel.add(inputField, BorderLayout.CENTER);
 
         JButton sendButton = new JButton("Send");
@@ -114,22 +109,20 @@ public class EchoClient extends JFrame {
         add(panel, BorderLayout.SOUTH);
 
         sendButton.addActionListener(e -> sendMessage());
-
         inputField.addActionListener(e -> sendMessage());
 
+        //close window
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                try {
-                    outputStream.writeUTF(EchoConstants.STOP_WORD);
-                    closeConnection();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                    try {
+                        outputStream.writeUTF(EchoConstants.STOP_WORD);
+                        closeConnection();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
         });
-
         setVisible(true);
 
     }
@@ -149,7 +142,9 @@ public class EchoClient extends JFrame {
 
 
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(EchoClient::new);
+
     }
 
 }
